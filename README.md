@@ -1,3 +1,9 @@
+Just add mathjax to `templates/main.html` using CDN "<https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js>".
+
+```bash
+cargo install --git https://github.com/Audns/mdserve
+```
+
 # mdserve
 
 Fast markdown preview server with **live reload** and **theme support**.
@@ -88,11 +94,11 @@ mdserve README.md --hostname 0.0.0.0 --port 8080
 **Single-File Mode**: When you pass a file path, mdserve serves that specific markdown file with a clean, focused view.
 
 **Directory Mode**: When you pass a directory path, mdserve automatically:
+
 - Scans and serves all `.md` and `.markdown` files in that directory
 - Displays a navigation sidebar for easy switching between files
 - Watches for new markdown files added to the directory
 - Only monitors the immediate directory (non-recursive)
-
 
 ## Endpoints
 
@@ -104,6 +110,7 @@ Once running, the server provides (default: [http://localhost:3000](http://local
 ## Theme System
 
 **Built-in Theme Selector**
+
 - Click the 🎨 button in the top-right corner to open theme selector
 - **5 Available Themes**:
   - **Light**: Clean, bright theme optimized for readability

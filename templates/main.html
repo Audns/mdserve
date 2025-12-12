@@ -451,6 +451,26 @@
         img { max-width: 100%; height: auto; }
     </style>
 
+    <!-- MathJax Configuration -->
+    <script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        options: {
+            ignoreHtmlClass: 'tex2jax_ignore',
+            processHtmlClass: 'tex2jax_process'
+        },
+        startup: {
+            typeset: false
+        }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     {% if mermaid_enabled %}
     <script src="/mermaid.min.js"></script>
     {% endif %}
@@ -481,6 +501,7 @@
             localStorage.setItem('theme', theme);
             updateThemeSelection(theme);
             updateMermaidTheme();
+            updateMathJaxTheme();
             closeThemeModal();
         }
 
@@ -600,6 +621,26 @@
             }
         }
 
+        // MathJax functions
+        function initMathJax() {
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('content')]);
+            }
+        }
+
+        function updateMathJaxTheme() {
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                const isDark = ['dark', 'catppuccin-macchiato', 'catppuccin-mocha'].includes(
+                    document.documentElement.getAttribute('data-theme')
+                );
+                // Update MathJax colors based on theme
+                const mathElements = document.querySelectorAll('.MathJax, .mjx-container');
+                mathElements.forEach(el => {
+                    el.style.color = isDark ? '#cdd6f4' : '#333';
+                });
+            }
+        }
+
         // Auto-refresh functionality using WebSocket
         function setupLiveReload() {
             const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
@@ -638,6 +679,7 @@
             initTheme();
             initSidebar();
             initMermaid();
+            initMathJax();
             setupLiveReload();
 
             // Modal close functionality
